@@ -7,6 +7,16 @@
     <title>Kirpputori - Login</title>
     <link rel="stylesheet" href="/bootstrap.min.css">
     <link rel="stylesheet" href="/style.css">
+    <style>
+        DIV {
+  text-align: center;
+        }
+        MAP{
+  height: 100px;
+  width: 50%; 
+}
+
+    </style>
 </head>
 <body>
      <div class="custom-container">
@@ -49,5 +59,36 @@
             </form>
         </div>
     </div>
-</body>
+    <br>
+    </br>
+    <br>
+    </br>
+   <div id="DIV">
+    <h2 style="align:center">Tai tule käymään paikanpäällä!</h2>
+    </div>
+<body id="MAP">
+    <script>
+      const CONFIGURATION = {
+        "locations": [
+          {"title":"Katinala","address1":"13800 Katinala","address2":"Suomi","coords":{"lat":61.03583761603288,"lng":24.40602206256563},"placeId":"ChIJQ46JxGFejkYRsDKPuVO1AAo"}
+        ],
+        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17,"mapId":""},
+        "mapsApiKey": "AIzaSyDWzN3EppfrOH3ugGf7T_qUyPKqQIqlWeI",
+        "capabilities": {"input":false,"autocomplete":false,"directions":false,"distanceMatrix":false,"details":false,"actions":false}
+      };
+    </script>
+    <script type="module">
+      document.addEventListener('DOMContentLoaded', async () => {
+        await customElements.whenDefined('gmpx-store-locator');
+        const locator = document.querySelector('gmpx-store-locator');
+        locator.configureFromQuickBuilder(CONFIGURATION);
+      });
+    </script>
+  </head>
+  
+    <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
+    <gmpx-api-loader key="AIzaSyDWzN3EppfrOH3ugGf7T_qUyPKqQIqlWeI" solution-channel="GMP_QB_locatorplus_v10_c"></gmpx-api-loader>
+    <gmpx-store-locator map-id="DEMO_MAP_ID"></gmpx-store-locator>
+  </body>
+
 </html>
