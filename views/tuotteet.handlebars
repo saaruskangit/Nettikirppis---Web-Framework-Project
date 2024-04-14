@@ -1,0 +1,24 @@
+<table id="kirppisTuotteet">
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nimi</th>
+        <th>Hinta</th>
+        <th>Päiväys</th>
+        <th>Kuvaus</th>
+        <th>Poista tuote</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each tuotteet}}
+      <tr>
+        <td>{{this._id}}</td>
+        <td>{{this.nimi}}</td>
+        <td>{{this.hinta}}</td>
+        <td>{{this.paivays}}</td>
+        <td>{{this.kuvaus}}</td>
+        <td>Poista tuote painike</td>
+      </tr>
+    {{/each}}
+
+  </tbody>
