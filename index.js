@@ -35,8 +35,12 @@ app.get('/', (req,res) => {
 // Tuotteen lisäys schema
 const Tuote = require('./models/lisaatuote');
 
+// osoite tuotteen lisäämis handlebarille
+app.get('/lisaatuote', (req, res) => {
+    res.render('lisaatuote');
+});
 
-// GET Kaikki tuotteet
+// READ Kaikki tuotteet
 app.get('/tuotteet', async (req, res) => {
     try{
         const tuotteet = await Tuote.find();
@@ -55,16 +59,69 @@ app.get('/tuotteet', async (req, res) => {
     }
 });
 
-// osoite tuotteen lisäämiselle
-app.get('/lisaatuote', (req, res) => {
-    res.render('lisaatuote');
-});
 
-// POST toiminto tuotteen lisäämiselle
+// CREATE toiminto tuotteen lisäämiselle 
+// API:n kautta toimii, selainversio vaatii hienosäätöä, lähinnä joku redirect homma. 
 app.post('/tuotteet', async (req, res) => {
     const uusiTuote = new Tuote(req.body);
-    await uusiTuote.save();
-    res.send("<h1>Uusi myytävä kohde lisätty kirppikselle</h1>");
+    try{
+        await uusiTuote.save();
+        res.status(201).json({
+            status: 'Success',
+            data: {
+                uusiTuote
+            }
+        });
+    }catch(err){
+        res.status(400).json({
+            status: 'Failed',
+            message: err
+        });
+    }
+});
+
+// UPDATE Toiminto tuotteelle
+app.patch('/tuotteet/:id', async (req, res) => {
+    const paivitaTuote = await Tuote.findByIdAndUpdate(req.params.id, req.body,{
+        new: true,
+        runValidators: true
+    })
+    try{
+        res.status(200).json({
+            status: 'Success',
+            data: {
+                paivitaTuote
+            }
+        })
+    }catch(err){
+        res.send(err)
+    }
+});
+
+// DELETE toiminto api 
+app.delete('/tuotteet/:id', async (req, res) => {
+    // Jos findByIdAndDelete ei löydä mitään, niin catch ei löydä siitä virhettä. Eli ensin pitää checkata jääkö funktio tyhjäksi 
+    idHaku = await Tuote.findByIdAndDelete(req.params.id);
+    if (idHaku === null){
+        res.status(400).json({
+            status: 'Failed',
+            msg: 'Ei löydy kyseistä ID:tä'
+        })
+    }
+    else{
+        try{
+            res.status(200).json(
+            {
+                status: 'Success',
+                msg: 'Tuote poistettu onnistuneesti'
+            })
+        }catch(err){
+            res.status(400).json({
+                status: 'Failed',
+                message: err
+            })
+        }
+    }
 });
 
 
