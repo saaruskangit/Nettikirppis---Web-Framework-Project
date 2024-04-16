@@ -17,8 +17,17 @@
         <td>{{this.hinta}}</td>
         <td>{{this.paivays}}</td>
         <td>{{this.kuvaus}}</td>
-        <td>Poista tuote painike</td>
+        <td><button onclick="poistaTuote('{{this._id}}')">Poista</button></td>
       </tr>
     {{/each}}
-
   </tbody>
+</table>
+
+<script>
+function poistaTuote(id) {
+    if (confirm("Haluarko varmasti poistaa tuotteen?")) {
+        fetch(`/tuotteet/${id}`, { method: 'DELETE' })
+            .then(() => location.reload());
+    }
+}
+</script>
