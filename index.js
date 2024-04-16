@@ -124,6 +124,19 @@ app.delete('/tuotteet/:id', async (req, res) => {
     }
 });
 
+// Delete toiminto
+app.delete('/tuotteet/:id', async (req, res) => {
+    const id = req.params.id;
+    await Tuote.findByIdAndDelete(id);
+    try {
+        await Tuote.findByIdAndDelete(id);
+        res.json({ message: 'Tuote poistettu' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error' });
+    }
+});
+
 
 });
 app.get('/register', (req,res) => {
