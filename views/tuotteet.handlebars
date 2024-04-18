@@ -6,7 +6,7 @@
         <th>Hinta</th>
         <th>Päiväys</th>
         <th>Kuvaus</th>
-        <th>Poista tuote</th>
+        <th>Toiminnot</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +17,7 @@
         <td>{{this.hinta}}</td>
         <td>{{this.paivays}}</td>
         <td>{{this.kuvaus}}</td>
-        <td><button onclick="poistaTuote('{{this._id}}')">Poista</button></td>
+        <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>
       </tr>
     {{/each}}
   </tbody>
@@ -25,9 +25,31 @@
 
 <script>
 function poistaTuote(id) {
-    if (confirm("Haluarko varmasti poistaa tuotteen?")) {
+    if (confirm("Haluatko varmasti poistaa tuotteen?")) {
         fetch(`/tuotteet/${id}`, { method: 'DELETE' })
             .then(() => location.reload());
+    }
+}
+
+function muokkaa(id){
+    var nimi = prompt("Nimi?")
+    var hinta = prompt("Hinta?")
+    var paivamaara = prompt("Päivämäärä?")
+    var kuvaus = prompt("Kuvaus?")
+    if (confirm("Muokkaa riviä?")){
+          fetch(`/tuotteet/${id}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              nimi: nimi,
+              hinta: hinta,
+              paivays: paivamaara,
+              kuvaus: kuvaus
+            })
+          })
+          .then(() => location.reload());
     }
 }
 </script>

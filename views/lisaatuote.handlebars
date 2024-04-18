@@ -5,5 +5,11 @@
     Lisäyspäivämäärä: <input type="date" name="paivays"><br>
     Tuotteen kuvaus: <input type="text" name="kuvaus">
     {{!-- Kuva: <input type="image" name="kuva"><br> --}}
-    <button>Lisää tuote</button>
+    <button onclick="feedback()">Lisää tuote</button>
 </form>
+
+<script>
+    function feedback(){
+        alert("Tuote lisätty onnistuneesti");
+    };
+</script>

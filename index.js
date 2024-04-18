@@ -66,12 +66,15 @@ app.post('/tuotteet', async (req, res) => {
     const uusiTuote = new Tuote(req.body);
     try{
         await uusiTuote.save();
-        res.status(201).json({
-            status: 'Success',
-            data: {
-                uusiTuote
-            }
-        });
+        res.redirect('/tuotteet');
+        // res.status(201).json({
+        //     status: 'Success',
+        //     message: 'Tuote lisätty onnistuneesti',
+        //     data: {
+        //         uusiTuote
+        //     }
+        // });
+
     }catch(err){
         res.status(400).json({
             status: 'Failed',
