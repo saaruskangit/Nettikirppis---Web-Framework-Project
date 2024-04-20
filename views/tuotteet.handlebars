@@ -1,28 +1,38 @@
-<table id="kirppisTuotteet">
-  <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nimi</th>
-        <th>Hinta</th>
-        <th>Päiväys</th>
-        <th>Kuvaus</th>
-        <th>Toiminnot</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each tuotteet}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tuotteet</title>
+</head>
+<body>
+{{!-- Navigation bar sivun ylälaidassa. Löytyy partials kansiosta --}}
+  {{> navigation}} 
+  <table id="kirppisTuotteet">
+    <thead>
       <tr>
-        <td>{{this._id}}</td>
-        <td>{{this.nimi}}</td>
-        <td>{{this.hinta}}</td>
-        <td>{{this.paivays}}</td>
-        <td>{{this.kuvaus}}</td>
-        <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>
+          <th>ID</th>
+          <th>Nimi</th>
+          <th>Hinta</th>
+          <th>Päiväys</th>
+          <th>Kuvaus</th>
+          <th>Toiminnot</th>
       </tr>
-    {{/each}}
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      {{#each tuotteet}}
+        <tr>
+          <td>{{this._id}}</td>
+          <td>{{this.nimi}}</td>
+          <td>{{this.hinta}}</td>
+          <td>{{this.paivays}}</td>
+          <td>{{this.kuvaus}}</td>
+          <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</body>
 <script>
 function poistaTuote(id) {
     if (confirm("Haluatko varmasti poistaa tuotteen?")) {

@@ -157,6 +157,13 @@ app.get('/nav', (req,res) => {
 //folder for static files like styles/jpg's and so on.
 app.use(express.static('public'));
 
+// Admin area
+app.get('/admin', (req, res) => {
+    res.render('admin');
+});
 
-
+// Käyttäjät
+app.get('/kayttajat', (req, res) => {
+    res.render('kayttajat');
+});
 
