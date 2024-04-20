@@ -1,15 +1,62 @@
-<h1>Add a product</h1>
-<form method="post" action="/tuotteet">
-    Tuotteen nimi: <input type="text" name="nimi"><br>
-    Tuotteen hinta: <input type="text" name="hinta"><br>
-    Lisäyspäivämäärä: <input type="date" name="paivays"><br>
-    Tuotteen kuvaus: <input type="text" name="kuvaus">
-    {{!-- Kuva: <input type="image" name="kuva"><br> --}}
-    <button onclick="feedback()">Lisää tuote</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <div class ="container">
+    <h1>Add a product</h1>
+    {{!-- {{#if typeof alert != undefined}}
+    {{#each alert}}
+    {{#myAlertFunction this}} --}}
+    {{#if alert}}
+  {{#each alert}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Holy guacamole!</strong> {{this.msg}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+  {{/each}}
+{{/if}}
+{{!-- {{/myAlertFunction}}
+{{/each}}
+{{/if}} --}}
 
-<script>
+    <form method="post" action="/tuotteet">
+    <div class="form-group">
+        <label for="nimi" class="form-label">Tuotteen nimi</label>
+        <input type="text" class="form-control" name="nimi" id="nimi">
+    </div>
+    <div class="form-group">
+        <label for="hinta" class="form-label">Tuotteen hinta</label>
+        <input type="text" class="form-control" name="hinta" id="tuotten_hinta">
+    </div>
+    <div class="form-group">
+        <label for="paivays" class="form-label">Päivämäärä</label>
+        <input type="date" class="form-control" name="paivays" id="tuotten_paivays">
+    </div>
+    <div class="form-group">
+        <label for="kuvaus" class="form-label">Kuvaus</label>
+        <input type="text" class="form-control" name="kuvaus" id="tuotten_kuvaus">
+    </div>
+    {{!-- Kuva: <input type="image" name="kuva"><br> --}}
+    <button onclick="feedback()" class="btn btn-primary">Lisää tuote</button>
+</form>
+</div>
+</body>
+</html>
+
+
+{{!-- <script>
     function feedback(){
         alert("Tuote lisätty onnistuneesti");
     };
-</script>
+</script> --}}
+
+
+
+   
