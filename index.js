@@ -150,6 +150,10 @@ app.get('/dashboard', (req,res) => {
     //res.send("Testing");
     res.render('dashboard');
 });
+app.get('/nav', (req,res) => {
+    //res.send("Testing");
+    res.render('nav');
+});
 //folder for static files like styles/jpg's and so on.
 app.use(express.static('public'));
 
