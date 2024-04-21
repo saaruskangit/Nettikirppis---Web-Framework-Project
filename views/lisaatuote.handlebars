@@ -15,7 +15,7 @@
     {{#if alert}}
   {{#each alert}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> {{this.msg}}
+  <strong>{{this.msg}}</strong> 
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -40,31 +40,27 @@
     </div>
     <div class="form-group">
         <label for="hinta" class="form-label">Tuotteen hinta</label>
-        <input type="text" class="form-control" name="hinta" id="tuotten_hinta">
+        <input type="text" class="form-control" name="hinta" id="hinta">
     </div>
     <div class="form-group">
         <label for="paivays" class="form-label">Päivämäärä</label>
-        <input type="date" class="form-control" name="paivays" id="tuotten_paivays">
+        <input type="date" class="form-control" name="paivays" id="paivays">
     </div>
     <div class="form-group">
         <label for="kuvaus" class="form-label">Kuvaus</label>
-        <input type="text" class="form-control" name="kuvaus" id="tuotten_kuvaus">
+        <input type="text" class="form-control" name="kuvaus" id="kuvaus">
     </div>
     {{!-- Kuva: <input type="image" name="kuva"><br> --}}
  
 </button>
     <button onclick="feedback()" class="btn btn-primary">Lisää tuote</button>
 </form>
+<br>
+</button>
+    <button onclick="window.location.href='/tuotteet'"" class="btn btn-primary">Siirry tuotteisiin</button>
 </div>
 </body>
 </html>
-
-
-{{!-- <script>
-    function feedback(){
-        alert("Tuote lisätty onnistuneesti");
-    };
-</script> --}}
 
 
 

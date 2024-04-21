@@ -80,6 +80,9 @@ app.get("/", (req, res) => {
       check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
         .exists()
         .isLength({ min: 3 }),
+      check("hinta", "Syötä 'Tuotteen hinta' - kenttään ainoastaan numeroita.")
+        .exists()
+        .isNumeric(),
     ],
 
     async (req, res) => {
