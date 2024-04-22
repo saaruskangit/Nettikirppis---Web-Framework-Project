@@ -79,6 +79,9 @@ app.get("/", (req, res) => {
       check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
         .exists()
         .isLength({ min: 3 }),
+      check("hinta", "Syötä 'Tuotteen hinta' - kenttään ainoastaan numeroita.")
+        .exists()
+        .isNumeric(),
     ],
 
     async (req, res) => {
@@ -91,9 +94,20 @@ app.get("/", (req, res) => {
         });
         //return res.status(422).jsonp(errors.array());
       } else {
+        const alert2 = "Tuote lisätty onnistuneesti";
+        res.render("lisaatuote", {
+          alert2,
+        });
         try {
           await uusiTuote.save();
-          res.redirect("/tuotteet");
+          //   res.render("lisaatuote", {
+          //     alert2,
+          //   });
+          //   setTimeout(() => {
+          //     res.redirect("/tuotteet");
+          //   }, 2000);
+
+          //   res.redirect("/tuotteet");
           // res.status(201).json({
           //     status: 'Success',
           //     message: 'Tuote lisätty onnistuneesti',
