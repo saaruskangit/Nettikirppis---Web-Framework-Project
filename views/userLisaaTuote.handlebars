@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
@@ -11,24 +13,27 @@
 
     <div class ="container">
     <h1>Add a product</h1>
-    {{!-- {{#if typeof alert != undefined}}
-    {{#each alert}}
-    {{#myAlertFunction this}} --}}
+
     {{#if alert}}
   {{#each alert}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Holy guacamole!</strong> {{this.msg}}
+  <strong>{{this.msg}}</strong> 
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
   {{/each}}
-{{/if}}
-{{!-- {{/myAlertFunction}}
-{{/each}}
-{{/if}} --}}
+  {{else}}
+  {{#if alert2}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{alert2}}</strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/if}}{{/if}}
 
-    <form method="post" action="/tuotteet">
+    <form method="post" action="/usertuotteet">
     <div class="form-group">
         <label for="nimi" class="form-label">Tuotteen nimi</label>
         <input type="text" class="form-control" name="nimi" id="nimi">
@@ -46,18 +51,18 @@
         <input type="text" class="form-control" name="kuvaus" id="tuotten_kuvaus">
     </div>
     {{!-- Kuva: <input type="image" name="kuva"><br> --}}
-    <button onclick="feedback()" class="btn btn-primary">Lisää tuote</button>
+    <button class="btn btn-primary">Lisää tuote</button>
 </form>
+    <br>
+
+    <button onclick="window.location.href='/usertuotteet'" class="btn btn-primary">Siirry tuotteisiin</button>
+
 </div>
 </body>
 </html>
 
 
-{{!-- <script>
-    function feedback(){
-        alert("Tuote lisätty onnistuneesti");
-    };
-</script> --}}
+
 
 
 

@@ -237,3 +237,42 @@ app.get("/usertuotteet", async (req, res) => {
     console.log(error);
   }
 });
+
+app.post(
+  "/usertuotteet",
+  urlencodedParser,
+  [
+    check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
+      .exists()
+      .isLength({ min: 3 }),
+    check("hinta", "Syötä 'Tuotteen hinta' - kenttään ainoastaan numeroita.")
+      .exists()
+      .isNumeric(),
+  ],
+
+  async (req, res) => {
+    const Tuote = require("./models/lisaatuote");
+    const errors = validationResult(req);
+    const uusiTuote = new Tuote(req.body);
+    if (!errors.isEmpty()) {
+      const alert = errors.array();
+      res.render("userlisaatuote", {
+        alert,
+      });
+      //return res.status(422).jsonp(errors.array());
+    } else {
+      const alert2 = "Tuote lisätty onnistuneesti";
+      res.render("userlisaatuote", {
+        alert2,
+      });
+      try {
+        await uusiTuote.save();
+      } catch (err) {
+        res.status(400).json({
+          status: "Failed",
+          message: err,
+        });
+      }
+    }
+  }
+);
