@@ -72,7 +72,6 @@ app.get("/", (req, res) => {
   });
 
   // CREATE toiminto tuotteen lisäämiselle
-  // API:n kautta toimii, selainversio vaatii hienosäätöä, lähinnä joku redirect homma.
   app.post(
     "/tuotteet",
     urlencodedParser,
@@ -194,4 +193,33 @@ app.get("/admin", (req, res) => {
 // Käyttäjät
 app.get("/kayttajat", (req, res) => {
   res.render("kayttajat");
+});
+
+//Lisää Tuote peruskäyttäjille
+app.get("/userlisaatuote", (req, res) => {
+  res.render("userLisaaTuote");
+});
+
+//Peruskäyttäjän omat sivut
+app.get("/omakirppis", (req, res) => {
+  res.render("omaKirppis");
+});
+
+//Peruskäyttäjän näkymä tuotteille
+app.get("/usertuotteet", async (req, res) => {
+  const Tuote = require("./models/lisaatuote");
+  try {
+    const tuotteet = await Tuote.find();
+    //res.json(result);
+    res.render("userTuotteet", {
+      otsikko: "Kaikki tuotteet",
+      tuotteet: tuotteet.map((doc) => doc.toJSON()),
+    });
+    console.log(tuotteet);
+  } catch (error) {
+    res.status(404).render("userTuotteet", {
+      title: "We got an error here",
+    });
+    console.log(error);
+  }
 });
