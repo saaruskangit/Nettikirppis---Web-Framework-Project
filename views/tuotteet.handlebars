@@ -7,7 +7,7 @@
 </head>
 <body>
 {{!-- Navigation bar sivun ylälaidassa. Löytyy partials kansiosta --}}
-  {{> navigation}} 
+  {{> adminNavigation}} 
   <table id="kirppisTuotteet">
     <thead>
       <tr>
@@ -43,7 +43,7 @@ function poistaTuote(id) {
 
 // Kaipaa hienosäätöä ja syötteiden validointeja 
 function muokkaa(id){
-    var nimi = prompt("Nimi?")
+    var nimi = prompt("Nimi?", id)
     var hinta = prompt("Hinta?")
     var paivamaara = prompt("Päivämäärä?")
     var kuvaus = prompt("Kuvaus?")

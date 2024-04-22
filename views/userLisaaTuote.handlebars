@@ -9,11 +9,11 @@
     <title>Document</title>
 </head>
 <body>
-    {{> adminNavigation}}
+    {{> userNavigation}}
 
     <div class ="container">
     <h1>Add a product</h1>
-  
+
     {{#if alert}}
   {{#each alert}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -33,36 +33,36 @@
 </div>
 {{/if}}{{/if}}
 
-
-
-    <form method="post" action="/tuotteet">
+    <form method="post" action="/usertuotteet">
     <div class="form-group">
         <label for="nimi" class="form-label">Tuotteen nimi</label>
         <input type="text" class="form-control" name="nimi" id="nimi">
     </div>
     <div class="form-group">
         <label for="hinta" class="form-label">Tuotteen hinta</label>
-        <input type="text" class="form-control" name="hinta" id="hinta">
+        <input type="text" class="form-control" name="hinta" id="tuotten_hinta">
     </div>
     <div class="form-group">
         <label for="paivays" class="form-label">Päivämäärä</label>
-        <input type="date" class="form-control" name="paivays" id="paivays">
+        <input type="date" class="form-control" name="paivays" id="tuotten_paivays">
     </div>
     <div class="form-group">
         <label for="kuvaus" class="form-label">Kuvaus</label>
-        <input type="text" class="form-control" name="kuvaus" id="kuvaus">
+        <input type="text" class="form-control" name="kuvaus" id="tuotten_kuvaus">
     </div>
     {{!-- Kuva: <input type="image" name="kuva"><br> --}}
- 
-</button>
     <button class="btn btn-primary">Lisää tuote</button>
 </form>
-<br>
-</button>
-    <button onclick="window.location.href='/tuotteet'" class="btn btn-primary">Siirry tuotteisiin</button>
+    <br>
+
+    <button onclick="window.location.href='/usertuotteet'" class="btn btn-primary">Siirry tuotteisiin</button>
+
 </div>
 </body>
 </html>
+
+
+
 
 
 

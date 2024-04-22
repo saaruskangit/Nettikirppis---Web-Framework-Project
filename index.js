@@ -72,7 +72,6 @@ app.get("/", (req, res) => {
   });
 
   // CREATE toiminto tuotteen lisäämiselle
-  // API:n kautta toimii, selainversio vaatii hienosäätöä, lähinnä joku redirect homma.
   app.post(
     "/tuotteet",
     urlencodedParser,
@@ -255,3 +254,71 @@ const Varaus = require("./models/varaus");
   );
   
 
+
+//Lisää Tuote peruskäyttäjille
+app.get("/userlisaatuote", (req, res) => {
+  res.render("userLisaaTuote");
+});
+
+//Peruskäyttäjän omat sivut
+app.get("/omakirppis", (req, res) => {
+  res.render("omaKirppis");
+});
+
+//Peruskäyttäjän näkymä tuotteille
+app.get("/usertuotteet", async (req, res) => {
+  const Tuote = require("./models/lisaatuote");
+  try {
+    const tuotteet = await Tuote.find();
+    //res.json(result);
+    res.render("userTuotteet", {
+      otsikko: "Kaikki tuotteet",
+      tuotteet: tuotteet.map((doc) => doc.toJSON()),
+    });
+    console.log(tuotteet);
+  } catch (error) {
+    res.status(404).render("userTuotteet", {
+      title: "We got an error here",
+    });
+    console.log(error);
+  }
+});
+
+app.post(
+  "/usertuotteet",
+  urlencodedParser,
+  [
+    check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
+      .exists()
+      .isLength({ min: 3 }),
+    check("hinta", "Syötä 'Tuotteen hinta' - kenttään ainoastaan numeroita.")
+      .exists()
+      .isNumeric(),
+  ],
+
+  async (req, res) => {
+    const Tuote = require("./models/lisaatuote");
+    const errors = validationResult(req);
+    const uusiTuote = new Tuote(req.body);
+    if (!errors.isEmpty()) {
+      const alert = errors.array();
+      res.render("userlisaatuote", {
+        alert,
+      });
+      //return res.status(422).jsonp(errors.array());
+    } else {
+      const alert2 = "Tuote lisätty onnistuneesti";
+      res.render("userlisaatuote", {
+        alert2,
+      });
+      try {
+        await uusiTuote.save();
+      } catch (err) {
+        res.status(400).json({
+          status: "Failed",
+          message: err,
+        });
+      }
+    }
+  }
+);
