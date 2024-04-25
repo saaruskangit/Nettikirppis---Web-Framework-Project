@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 const { check, validationResult } = require("express-validator");
+// kuva hommat
+const multer = require("multer");
+//const ImageModel = require("./models/image.model");
 
 const app = express();
 app.set("view engine", "handlebars");
@@ -41,6 +45,22 @@ mongoose
     console.log(err);
   });
 
+// kuva hommat
+app.use("/uploads", express.static("uploads"));
+const Storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({
+  storage: Storage,
+});
+
 app.get("/", (req, res) => {
   //res.send("Testing");
   res.render("index");
@@ -75,6 +95,7 @@ app.get("/", (req, res) => {
   app.post(
     "/tuotteet",
     urlencodedParser,
+    upload.single("kuva"),
     [
       check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
         .exists()
@@ -83,42 +104,34 @@ app.get("/", (req, res) => {
         .exists()
         .isNumeric(),
     ],
-
     async (req, res) => {
       const errors = validationResult(req);
-      const uusiTuote = new Tuote(req.body);
       if (!errors.isEmpty()) {
         const alert = errors.array();
         res.render("lisaatuote", {
           alert,
         });
-        //return res.status(422).jsonp(errors.array());
       } else {
-        const alert2 = "Tuote lisätty onnistuneesti";
-        res.render("lisaatuote", {
-          alert2,
-        });
         try {
+          if (!req.file) {
+            throw new Error("Kuva vaaditaan");
+          }
+          const uusiTuote = new Tuote({
+            nimi: req.body.nimi,
+            hinta: req.body.hinta,
+            paivays: req.body.paivays,
+            kuvaus: req.body.kuvaus,
+            kuva: req.file.filename, // tallenna tiedostonimi tietokantaan
+          });
           await uusiTuote.save();
-          //   res.render("lisaatuote", {
-          //     alert2,
-          //   });
-          //   setTimeout(() => {
-          //     res.redirect("/tuotteet");
-          //   }, 2000);
-
-          //   res.redirect("/tuotteet");
-          // res.status(201).json({
-          //     status: 'Success',
-          //     message: 'Tuote lisätty onnistuneesti',
-          //     data: {
-          //         uusiTuote
-          //     }
-          // });
+          const alert2 = "Tuote lisätty onnistuneesti";
+          res.render("lisaatuote", {
+            alert2,
+          });
         } catch (err) {
           res.status(400).json({
             status: "Failed",
-            message: err,
+            message: err.message,
           });
         }
       }
