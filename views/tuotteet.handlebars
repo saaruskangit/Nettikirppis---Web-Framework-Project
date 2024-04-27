@@ -16,6 +16,7 @@
           <th>Hinta</th>
           <th>Päiväys</th>
           <th>Kuvaus</th>
+          <th>Kuva</th>
           <th>Toiminnot</th>
       </tr>
     </thead>
@@ -27,12 +28,14 @@
           <td>{{this.hinta}}</td>
           <td>{{this.paivays}}</td>
           <td>{{this.kuvaus}}</td>
+          <td><img src="/uploads/{{this.kuva}}" alt="Kuva"></td> 
           <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </body>
+
 <script>
 function poistaTuote(id) {
     if (confirm("Haluatko varmasti poistaa tuotteen?")) {
