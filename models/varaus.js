@@ -13,6 +13,11 @@ const varausSchema = new mongoose.Schema({
     type: Date,
     required: true
   }
+  ,
+  poytaID: {
+    type: String,
+    required: true
+  }
 });
 
 const Varaus = mongoose.model("Varaus", varausSchema);

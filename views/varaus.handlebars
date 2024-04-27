@@ -46,10 +46,11 @@
                 <label for="loppuPaivays" class="form-label">loppu päivämäärä</label>
                 <input type="date" class="form-control" name="loppuPaivays" id="loppuPaivays">
             </div>
+            <input type="hidden" name="poytaID" id="poytaID">
             <button type="submit" class="btn btn-primary">Lisää varaus</button>
         </form>
         <br>
-        <button onclick="window.location.href='/kalenteri'" class="btn btn-primary">Siirry kalenteriin</button>
+        <div class="btn btn-primary" onclick="siirryKalenteriin()">Siirry kalenteriin</div>
     </div>
 
     <script>
@@ -82,13 +83,23 @@
             return false;
         }
 
-        if (loppuDate < alkuDate) {
+        if (loppuDate <= alkuDate) {
             alert("Loppu päivämäärä täytyy olla alku päivämäärän jälkeen");
             return false;
         }
 
+        // Generoi PöytäID
+        var poytaID = generatePoytaID();
+        document.getElementById('poytaID').value = poytaID;
+
         return true;
     }
+
+    function generatePoytaID() {
+    // Generoi random numero PöytäID (väliltä 1 and 100)
+    return Math.floor(Math.random() * 100) + 1;
+    }
+    
     </script>
 
 
