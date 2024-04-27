@@ -6,16 +6,16 @@ const varausSchema = new mongoose.Schema({
     required: true
   },
   alkuPaivays: {
-    type: Date,
+    type: String,
     required: true
   },
   loppuPaivays: {
-    type: Date,
+    type: String,
     required: true
   }
   ,
   poytaID: {
-    type: String,
+    type: Number,
     required: true
   }
 });

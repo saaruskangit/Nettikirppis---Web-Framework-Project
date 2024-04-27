@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalenteri</title>
+    <!-- Include Handlebars library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery UI library -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Include jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #kirppisVaraukset th {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    {{> adminNavigation}}
+    <script id="template-row" type="text/x-handlebars-template">
+        <div class="row">
+            <input type="text" class="datePicker">
+        </div>
+    </script>
+
+    <!-- Table to display varaus -->
+    <table id="kirppisVaraukset">
+        <thead>
+            <tr>
+                <th>Pöytä numero</th>
+                <th>Nimi</th>
+                <th>Alku päivämäärä</th>
+                <th>Loppu päivämäärä</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each varaus}}
+            <tr>
+                <td>{{this.poytaID}}</td>
+                <td>{{this.nimi}}</td>
+                <td>{{this.alkuPaivays}}</td>
+                <td>{{this.loppuPaivays}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <h3>Valitse päivämäärä</h3>
+
+</body>
+<script>
+
+    function displayVaraus(varaus) {
+        var tableBody = $('#kirppisVaraukset tbody');
+        tableBody.empty();
+
+        if (!varaus || varaus.length === 0) {
+            tableBody.append('<tr><td colspan="4">Ei varauksia tälle päivälle.</td></tr>');
+        } else {
+            varaus.forEach(function(varaus) {
+                tableBody.append('<tr><td>' + varaus.poytaID + '</td><td>' + varaus.nimi + '</td><td>' + varaus.alkuPaivays + '</td><td>' + varaus.loppuPaivays + '</td></tr>');
+            });
+        }
+
+        // Näytä varaukset
+        $('#kirppisVaraukset').show();
+    }
+
+    $(document).ready(function() {
+        var t = Handlebars.compile($('#template-row').html());
+        var $html = $(t());
+
+        $html.find('.datePicker').datepicker({
+            dateFormat: "yy-mm-d",
+            minDate: new Date("2024-01-04"),
+            maxDate: new Date("2024-12-30"),
+            firstDay: 1, // Asetetaan viikon ensimmäiseksi päiväksi maanantai
+            onSelect: function(selectedDate) {
+                $.get("/varaukset", { selectedDate: selectedDate }, function(data) {
+                    console.log("Data received:", data);
+                    
+                    displayVaraus(data.varaus);
+                });
+            }
+        });
+
+        $('body').append($html);
+    });
+</script>
+</html>
+

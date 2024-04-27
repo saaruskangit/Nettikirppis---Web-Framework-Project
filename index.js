@@ -335,3 +335,14 @@ app.post(
     }
   }
 );
+
+// Varauksien tarkastelu
+app.get("/varaukset", async (req, res) => {
+  try {
+      const varaus = await Varaus.find({ alkuPaivays: req.query.selectedDate });
+
+      res.json({ varaus });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
