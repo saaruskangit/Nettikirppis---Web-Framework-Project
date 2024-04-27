@@ -28,13 +28,33 @@
           <td>{{this.hinta}}</td>
           <td>{{this.paivays}}</td>
           <td>{{this.kuvaus}}</td>
-          <td><img src="/uploads/{{this.kuva}}" alt="Kuva"></td> 
-          <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>
+          <td>
+            <a href="#" onclick="showImagePopup('/uploads/{{this.kuva}}'); return false;">
+            <img src="/uploads/{{this.kuva}}" alt="Kuva">
+            </a>
+          </td>
+          <td><button onclick="poistaTuote('{{this._id}}')">Poista</button><button onclick="muokkaa('{{this._id}}')">Muokkaa</button></td>       
         </tr>
       {{/each}}
     </tbody>
   </table>
 </body>
+
+
+
+
+
+
+
+<!-- JavaScript -->
+<script>
+    function showImagePopup(imageUrl) {
+        // Luo uusi ikkuna ja aseta sen ominaisuudet
+        var popup = window.open(imageUrl, '_blank', 'width=600,height=400,scrollbars=no,resizable=no');
+        // Estä linkin oletusarvoinen toiminta
+        return false;
+    }
+</script>
 
 <script>
 function poistaTuote(id) {
