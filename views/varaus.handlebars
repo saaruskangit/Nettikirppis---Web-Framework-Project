@@ -9,6 +9,7 @@
     <title>Varaus</title>
 </head>
 <body>
+    {{> adminNavigation}}
     <div class ="container">
         <h1>Pöytävaraus</h1>
   
@@ -32,7 +33,7 @@
             {{/if}}
         {{/if}}
 
-        <form method="post" action="/varaus">
+        <form method="post" action="/varaus" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="nimi" class="form-label">Nimi</label>
                 <input type="text" class="form-control" name="nimi" id="nimi">
@@ -45,10 +46,52 @@
                 <label for="loppuPaivays" class="form-label">loppu päivämäärä</label>
                 <input type="date" class="form-control" name="loppuPaivays" id="loppuPaivays">
             </div>
-            <button onclick="feedback()" class="btn btn-primary">Lisää varaus</button>
+            <button type="submit" class="btn btn-primary">Lisää varaus</button>
         </form>
         <br>
         <button onclick="window.location.href='/kalenteri'" class="btn btn-primary">Siirry kalenteriin</button>
     </div>
+
+    <script>
+    function validateForm() {
+        var nimi = document.getElementById('nimi').value;
+        var alkuPaivays = document.getElementById('alkuPaivays').value;
+        var loppuPaivays = document.getElementById('loppuPaivays').value;
+
+        if (nimi.trim() === '') {
+            alert("Nimi täytyy täyttää");
+            return false;
+        }
+
+        if (alkuPaivays.trim() === '') {
+            alert("Alku päivämäärä täytyy täyttää");
+            return false;
+        }
+
+        if (loppuPaivays.trim() === '') {
+            alert("Loppu päivämäärä täytyy täyttää");
+            return false;
+        }
+
+        var today = new Date();
+        var alkuDate = new Date(alkuPaivays);
+        var loppuDate = new Date(loppuPaivays);
+
+        if (alkuDate < today) {
+            alert("Alku päivämäärä ei voi olla menneisyydessä");
+            return false;
+        }
+
+        if (loppuDate < alkuDate) {
+            alert("Loppu päivämäärä täytyy olla alku päivämäärän jälkeen");
+            return false;
+        }
+
+        return true;
+    }
+    </script>
+
+
 </body>
 </html>
+
