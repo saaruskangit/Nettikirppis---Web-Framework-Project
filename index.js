@@ -222,6 +222,52 @@ app.get("/kayttajat", (req, res) => {
   res.render("kayttajat");
 });
 
+// Kalenteri
+app.get("/kalenteri", (req, res) => {
+  res.render("kalenteri");
+});
+
+// Varaus
+app.get("/varaus", (req, res) => {
+  res.render("varaus");
+});
+
+// Varaus schema
+const Varaus = require("./models/varaus");
+
+  // CREATE toiminto varauksen tekemiselle
+  app.post(
+    "/varaus",
+    urlencodedParser,
+    [
+      check("nimi", "Anna tuotteelle nimi, syötä vähintään 3 kirjainta.")
+        .exists()
+        .isLength({ min: 3 }),
+    ],
+    async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const alert = errors.array();
+        // Send the response with validation errors
+        return res.render("varaus", { alert });
+      }
+  
+      // Create a new Varaus instance with request body
+      const uusiVaraus = new Varaus(req.body);
+      try {
+        // Save the Varaus instance to the database
+        await uusiVaraus.save();
+        // Send the response with success message
+        return res.render("varaus", { alert2: "Varaus lisätty onnistuneesti" });
+      } catch (err) {
+        // Send the response with error message
+        return res.status(400).json({ status: "Failed", message: err });
+      }
+    }
+  );
+  
+
+
 //Lisää Tuote peruskäyttäjille
 app.get("/userlisaatuote", (req, res) => {
   res.render("userLisaaTuote");
@@ -289,3 +335,14 @@ app.post(
     }
   }
 );
+
+// Varauksien tarkastelu
+app.get("/varaukset", async (req, res) => {
+  try {
+      const varaus = await Varaus.find({ alkuPaivays: req.query.selectedDate });
+
+      res.json({ varaus });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
