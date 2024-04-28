@@ -11,8 +11,12 @@
 <body>
     {{> adminNavigation}}
 
-    <div class ="container">
-    <h1>Add a product</h1>
+  <div class ="container">
+    <br>
+    <div class="mt-4">
+    <h1 class="text-center">Lisää tuote</h1>
+  </div>
+    <br>
   
     {{#if alert}}
   {{#each alert}}
@@ -56,14 +60,13 @@
         <label for="kuva" class="form-label">Kuva</label>
         <input type="file" class="form-control" name="kuva" id="kuva">
     </div>
-    {{!-- Kuva: <input type="image" name="kuva"><br> --}}
- 
+  
 </button>
-    <button class="btn btn-primary">Lisää tuote</button>
+    <button class="btn btn-outline-secondary">Lisää tuote</button>
 </form>
 <br>
 </button>
-    <button onclick="window.location.href='/tuotteet'" class="btn btn-primary">Siirry tuotteisiin</button>
+    <button onclick="window.location.href='/tuotteet'" class="btn btn-outline-secondary">Siirry tuotteisiin</button>
 </div>
 </body>
 </html>
