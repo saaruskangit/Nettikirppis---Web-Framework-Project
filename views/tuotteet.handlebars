@@ -65,6 +65,23 @@ function muokkaa(id){
     var hinta = prompt("Hinta?")
     var paivamaara = prompt("Päivämäärä?")
     var kuvaus = prompt("Kuvaus?")
+
+    // Validoidaan syötteet
+    const errors = validationResult({
+        nimi: nimi,
+        hinta: hinta,
+        paivamaara: paivamaara,
+        kuvaus: kuvaus
+    });
+
+    // Virheiden tarkistus
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            alert(error.msg); // Näytetään virheilmoitus
+        });
+        return;
+    }
+
     if (confirm("Muokkaa riviä?")){
           fetch(`/tuotteet/${id}`, {
             method: 'PATCH',

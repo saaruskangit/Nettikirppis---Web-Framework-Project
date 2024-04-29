@@ -104,7 +104,13 @@ app.get("/", (req, res) => {
         .exists()
         .isNumeric(),
       check("kuvaus", "Syötä tuotteelle kuvaus.").exists().notEmpty(),
-      check("kuva", "Lisää ilmoitukseen kuva.").notEmpty(),
+      check("kuva", "Lisää ilmoitukseen kuva.").custom((value, { req }) => {
+        if (req.file) {
+          return true;
+        } else {
+          throw new Error("Lisää ilmoitukseen kuva.");
+        }
+      }),
     ],
     async (req, res) => {
       const errors = validationResult(req);
@@ -115,15 +121,12 @@ app.get("/", (req, res) => {
         });
       } else {
         try {
-          if (!req.file) {
-            throw new Error("Kuva vaaditaan");
-          }
           const uusiTuote = new Tuote({
             nimi: req.body.nimi,
             hinta: req.body.hinta,
             paivays: req.body.paivays,
             kuvaus: req.body.kuvaus,
-            kuva: req.file.filename, // tallenna tiedostonimi tietokantaan
+            kuva: req.file.filename,
           });
           await uusiTuote.save();
           const alert2 = "Tuote lisätty onnistuneesti";
@@ -308,7 +311,13 @@ app.post(
       .exists()
       .isNumeric(),
     check("kuvaus", "Syötä tuotteelle kuvaus.").exists().notEmpty(),
-    check("kuva", "Lisää ilmoitukseen kuva.").isEmpty(),
+    check("kuva", "Lisää ilmoitukseen kuva.").custom((value, { req }) => {
+      if (req.file) {
+        return true;
+      } else {
+        throw new Error("Lisää ilmoitukseen kuva.");
+      }
+    }),
   ],
 
   async (req, res) => {

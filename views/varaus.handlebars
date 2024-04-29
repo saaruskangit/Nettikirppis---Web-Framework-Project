@@ -11,13 +11,18 @@
 <body>
     {{> adminNavigation}}
     <div class ="container">
-        <h1>Pöytävaraus</h1>
+        {{!-- //<h1>Pöytävaraus</h1> --}}
+        <br>
+    <div class="mt-4">
+    <h1 class="text-center">Pöytävaraus</h1>
+    </div>
+    <br>
   
         {{#if alert}}
             {{#each alert}}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>{{this.msg}}</strong> 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button" class="close btn btn-outline-secondary" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -26,7 +31,7 @@
             {{#if alert2}}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>{{alert2}}</strong> 
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button" class="close btn btn-outline-secondary" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -47,10 +52,10 @@
                 <input type="date" class="form-control" name="loppuPaivays" id="loppuPaivays">
             </div>
             <input type="hidden" name="poytaID" id="poytaID">
-            <button type="submit" class="btn btn-primary">Lisää varaus</button>
+            <button type="submit" class="btn btn-outline-secondary">Lisää varaus</button>
         </form>
         <br>
-        <button onclick="window.location.href='/kalenteri'" class="btn btn-primary">Siirry varauksiin</button>
+        <button onclick="window.location.href='/kalenteri'" class="btn btn-outline-secondary">Siirry varauksiin</button>
     </div>
 
     <script>
