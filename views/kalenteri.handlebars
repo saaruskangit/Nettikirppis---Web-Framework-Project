@@ -29,8 +29,7 @@
             <input type="text" class="datePicker">
         </div>
     </script>
-
-    <!-- Table to display varaus -->
+    
     <table id="kirppisVaraukset">
         <thead>
             <tr>
@@ -38,6 +37,7 @@
                 <th>Nimi</th>
                 <th>Alku päivämäärä</th>
                 <th>Loppu päivämäärä</th>
+                <th>Toiminnot</th>
             </tr>
         </thead>
         <tbody>
@@ -47,6 +47,7 @@
                 <td>{{this.nimi}}</td>
                 <td>{{this.alkuPaivays}}</td>
                 <td>{{this.loppuPaivays}}</td>
+                <td><button onclick="poistaVaraus('{{this._id}}')" class="btn btn-outline-secondary">Poista</button></td>
             </tr>
             {{/each}}
         </tbody>
@@ -55,16 +56,22 @@
 
 </body>
 <script>
+    function poistaVaraus(id) {
+    if (confirm("Haluatko varmasti poistaa varauksen?")) {
+        fetch(`/varaus/${id}`, { method: 'DELETE' })
+            .then(() => location.reload());
+    }
+    }
 
     function displayVaraus(varaus) {
         var tableBody = $('#kirppisVaraukset tbody');
         tableBody.empty();
 
         if (!varaus || varaus.length === 0) {
-            tableBody.append('<tr><td colspan="4">Ei varauksia tälle päivälle.</td></tr>');
+            tableBody.append('<tr><td colspan="5">Ei varauksia tälle päivälle.</td></tr>');
         } else {
             varaus.forEach(function(varaus) {
-                tableBody.append('<tr><td>' + varaus.poytaID + '</td><td>' + varaus.nimi + '</td><td>' + varaus.alkuPaivays + '</td><td>' + varaus.loppuPaivays + '</td></tr>');
+                tableBody.append('<tr><td>' + varaus.poytaID + '</td><td>' + varaus.nimi + '</td><td>' + varaus.alkuPaivays + '</td><td>' + varaus.loppuPaivays + '</td><td><button onclick="poistaVaraus(\'' + varaus._id + '\')" class="btn btn-outline-secondary">Poista</button></td></tr>');
             });
         }
 

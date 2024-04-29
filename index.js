@@ -347,7 +347,7 @@ app.post(
   }
 );
 
-// Varauksien tarkastelu
+// GET app varauksille
 app.get("/varaukset", async (req, res) => {
   try {
     const varaus = await Varaus.find({ alkuPaivays: req.query.selectedDate });
@@ -355,5 +355,18 @@ app.get("/varaukset", async (req, res) => {
     res.json({ varaus });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete toiminto
+app.delete("/varaus/:id", async (req, res) => {
+  const id = req.params.id;
+  await Varaus.findByIdAndDelete(id);
+  try {
+    await Varaus.findByIdAndDelete(id);
+    res.json({ message: "Varaus poistettu" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error" });
   }
 });
