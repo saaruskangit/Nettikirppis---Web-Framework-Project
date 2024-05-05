@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
     
 <head>
     <meta charset="UTF-8">
@@ -28,19 +28,19 @@
             {{#if success}}
             <div class="alert alert-success alert-dismissible fade show">
                 <strong>{{success}}</strong>
-                <button aria-label="close" class="close" data-dismiss="alert"><span>&times;</span></button>
+                <button aria-label="sulje" class="close" data-dismiss="alert"><span>&times;</span></button>
             </div>
             {{/if}}
             {{#if error}}
             <div class="alert alert-danger alert-dismissible fade show">
                 <strong>{{error}}</strong>
-                <button aria-label="alert" class="close" data-dismiss="alert"><span>&times;</span></button>
+                <button aria-label="huomio" class="close" data-dismiss="alert"><span>&times;</span></button>
             </div>
             {{/if}}
 
             <form action="" id="login" method="POST">
                 <div class="form-group">
-                    <label for="email" aria-label="email" >Sähköposti <span class="text-danger" >*</span></label>
+                    <label for="email" aria-label="sähköposti" >Sähköposti <span class="text-danger" >*</span></label>
                     <input type="email" class="form-control" name="username" id="email" placeholder="Syötä rekisteröity sähköposti">
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                     <input type="password" class="form-control" name="password" id="password" placeholder="Syötä salasanasi">
                 </div>
                 <div class="form-group">
-                    <input type="submit" aria-label="log in" value="Kirjaudu" class="btn btn-info btn-block">
+                    <input type="submit" aria-label="kirjaudu" value="Kirjaudu" class="btn btn-info btn-block">
                 </div>
                 <div class="form-group">
                     <div class="row">
