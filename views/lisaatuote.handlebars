@@ -1,73 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Lisää tuote</title>
 </head>
 <body>
+{{!-- Navbarin tuonti sivulle --}}
     {{> adminNavigation}}
 
-  <div class ="container">
-    <br>
-    <div class="mt-4">
+<div class ="container">
+  <br>
+  <div class="mt-4">
     <h1 class="text-center">Lisää tuote</h1>
   </div>
-    <br>
+  <br>
   
-    {{#if alert}}
-  {{#each alert}}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{this.msg}}</strong> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-  {{/each}}
+  {{#if alert}}
+    {{#each alert}}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{this.msg}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {{/each}}
   {{else}}
-  {{#if alert2}}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{alert2}}</strong> 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-{{/if}}{{/if}}
+    {{#if alert2}}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{alert2}}</strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {{/if}}
+  {{/if}}
 
 
 
-    <form method="post" action="/tuotteet" enctype="multipart/form-data">
+  <form method="post" action="/tuotteet" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="nimi" class="form-label">Tuotteen nimi</label>
-        <input type="text" class="form-control" name="nimi" id="nimi">
+      <label for="nimi" class="form-label">Tuotteen nimi</label>
+      <input type="text" class="form-control" name="nimi" id="nimi" aria-label="Tuotteen nimi" accesskey="n">
     </div>
     <div class="form-group">
-        <label for="hinta" class="form-label">Tuotteen hinta</label>
-        <input type="text" class="form-control" name="hinta" id="hinta">
+      <label for="hinta" class="form-label">Tuotteen hinta</label>
+      <input type="text" class="form-control" name="hinta" id="hinta" aria-label="Tuotteen hinta" accesskey="h">
     </div>
     <div class="form-group">
-        <label for="paivays" class="form-label">Päivämäärä</label>
-        <input type="date" class="form-control" name="paivays" id="paivays">
+      <label for="paivays" class="form-label">Päivämäärä</label>
+      <input type="date" class="form-control" name="paivays" id="paivays" aria-label="Tuotteen lisäyspäivämäärä" accesskey="d">
     </div>
     <div class="form-group">
-        <label for="kuvaus" class="form-label">Kuvaus</label>
-        <input type="text" class="form-control" name="kuvaus" id="kuvaus">
+      <label for="kuvaus" class="form-label">Kuvaus</label>
+      <input type="text" class="form-control" name="kuvaus" id="kuvaus" aria-label="Tuotteet kuvaus" accesskey="k">
     </div>
     <div class="form-group">
-        <label for="kuva" class="form-label">Kuva</label>
-        <input type="file" class="form-control" name="kuva" id="kuva">
+      <label for="kuva" class="form-label">Kuva</label>
+      <input type="file" class="form-control" name="kuva" id="kuva" aria-label="Kuva tuotteesta" accesskey="u">
     </div>
   
-</button>
-    <button class="btn btn-outline-secondary">Lisää tuote</button>
-</form>
+    <button type="submit" class="btn btn-outline-secondary" aria-label="Lisää tuote" accesskey="s">Lisää tuote</button>
+  </form>
 <br>
-</button>
-    <button onclick="window.location.href='/tuotteet'" class="btn btn-outline-secondary">Siirry tuotteisiin</button>
+    <button onclick="window.location.href='/tuotteet'" class="btn btn-outline-secondary" aria-label="Siirry tuotteisiin" accesskey="t">Siirry tuotteisiin</button>
 </div>
+
 </body>
 </html>
 
