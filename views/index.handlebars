@@ -67,6 +67,25 @@
    <div id="DIV">
     <h2 style="align:center">Tai tule käymään paikanpäällä!</h2>
     </div>
+      <div class="card">
+        <!-- Add your weather data here -->
+        <p>
+          <i>Lämpötila tällä hetkellä:</i>
+         {{weather.main.temp}} °C
+        </p>
+        <p>
+          <i>Tuntuu kuin:</i>
+          {{weather.main.feels_like}} °C
+         
+        </p>
+
+        <p>
+          <i class="fas fa-map-marker-alt"></i>
+          
+        </p>
+      </div>
+      
+    </div>
 <body id="MAP">
     <script>
       const CONFIGURATION = {

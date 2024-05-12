@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const axios = require("axios");
 const { check, validationResult } = require("express-validator");
 // kuva hommat
 const multer = require("multer");
@@ -10,6 +11,7 @@ const multer = require("multer");
 
 const app = express();
 app.set("view engine", "handlebars");
+app.use(express.static("public"));
 //const PORT = process.env.PORT || 3000;
 //app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 app.use(express.json());
@@ -62,8 +64,8 @@ const upload = multer({
 });
 
 app.get("/", (req, res) => {
-  //res.send("Testing");
-  res.render("index");
+  res.render("index", { weather: null, error: null });
+});
 
   // Tuotteen lisäys schema
   const Tuote = require("./models/lisaatuote");
@@ -201,7 +203,6 @@ app.get("/", (req, res) => {
       res.status(500).json({ error: "Error" });
     }
   });
-});
 app.get("/register", (req, res) => {
   //res.send("Testing");
   res.render("register");
@@ -369,4 +370,24 @@ app.delete("/varaus/:id", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Error" });
   }
+});
+
+// Handle the /weather route
+app.get("/weather", async (req, res) => {
+  // Get the city from the query parameters
+  const city = req.query.city;
+ // Replace "YOUR_API_KEY" with your actual OpenWeatherMap API key immediately after pasting this code
+  const apiKey = "20212a54ec8a7b351380bc2e2ad6850b"; // Replace with your OpenWeatherMap API key
+  const APIUrl = `https://api.openweathermap.org/data/2.5/weather?q=katinala&units=metric&appid=${apiKey}`;
+  let weather;
+  let error = null;
+  try {
+    const response = await axios.get(APIUrl);
+    weather = response.data;
+  } catch (error) {
+    weather = null;
+    error = "Error, Please try again";
+  }
+  // Render the index template with the weather data and error message
+  res.render("index", { weather, error });
 });
